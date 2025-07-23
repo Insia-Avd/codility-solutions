@@ -1,0 +1,15 @@
+# Year of the Rabbit
+# https://app.codility.com/programmers/challenges/year_of_the_rabbit_2023/
+
+def solution(A, B):
+    N = len(A)
+    for r in range(N): 
+        valid = True
+        for i in range(N):
+            b_index = (i - r + N) % N  
+            if A[i] == B[b_index]:
+                valid = False
+                break
+        if valid:
+            return r  
+    return -1  
