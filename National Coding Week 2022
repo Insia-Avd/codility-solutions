@@ -1,0 +1,28 @@
+# National Coding Week 2022
+# https://app.codility.com/programmers/challenges/national_coding_week2022/
+
+def solution(A, B):
+    from collections import deque, defaultdict
+    N = len(A)
+    nodes = N + 1
+    adj = defaultdict(list)
+    for u, v in zip(A, B):
+        adj[u].append(v)
+        adj[v].append(u)
+
+    depth = [-1] * nodes
+    depth[0] = 0
+    q = deque([0])
+    even = 1
+    odd = 0
+    while q:
+        node = q.popleft()
+        for nei in adj[node]:
+            if depth[nei] == -1:
+                depth[nei] = depth[node] + 1
+                if depth[nei] % 2 == 0:
+                    even += 1
+                else:
+                    odd += 1
+                q.append(nei)
+    return even * odd
