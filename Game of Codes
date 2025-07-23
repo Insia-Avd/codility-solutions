@@ -1,0 +1,23 @@
+# Game of Codes
+# https://app.codility.com/programmers/challenges/game_of_codes_2022/
+
+def solution(S):
+    N = len(S)
+    prefix = [[0] * (N+1) for _ in range(26)]
+    for i, c in enumerate(S):
+        for j in range(26):
+            prefix[j][i+1] = prefix[j][i] + (ord(c) - ord('a') == j)
+
+    max_len = 0
+    for i in range(N+1):  
+        for j in range(i, N+1):  
+            for a in range(26):
+                block1 = prefix[a][i] 
+                for b in range(26):
+                    block2 = prefix[b][j] - prefix[b][i]  
+                    for c in range(26):
+                        block3 = prefix[c][N] - prefix[c][j]  
+                        total = block1 + block2 + block3
+                        if (block1 > 0) + (block2 > 0) + (block3 > 0) <= 3:
+                            max_len = max(max_len, total)
+    return max_len
