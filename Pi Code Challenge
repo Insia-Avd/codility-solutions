@@ -1,0 +1,25 @@
+# Pi Code Challenge
+# https://app.codility.com/programmers/custom_challenge/pi_challenge_2023/
+
+def solution(P, Q):
+    N = len(P)
+    
+    unique_letters = set(P + Q)
+    letter_to_bit = {letter: i for i, letter in enumerate(unique_letters)}
+    total_unique = len(unique_letters)
+    
+    P_bits = [letter_to_bit[ch] for ch in P]
+    Q_bits = [letter_to_bit[ch] for ch in Q]
+    
+    min_distinct = total_unique  
+    
+    for mask in range(1 << total_unique):
+        valid = True
+        for i in range(N):
+            if not ((mask >> P_bits[i]) & 1 or (mask >> Q_bits[i]) & 1):
+                valid = False
+                break
+        if valid:
+            min_distinct = min(min_distinct, bin(mask).count("1"))
+    
+    return min_distinct
